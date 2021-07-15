@@ -1,4 +1,4 @@
-from flask import Flask 
+from flask import Flask, jsonify, request 
 from bert_model import *
 import os
 app = Flask(__name__)
@@ -7,10 +7,13 @@ app = Flask(__name__)
 def hello():    
     return 'Alright , Server runs fine !'
 
-@app.route('/')
-def 
-
-
-if __name__=='__main__':
+@app.route('/get_sentiment', method=['POST'])
+def get_sentiment():
+    x = request.get_json(force=True)
+    NameEntity = model.get_predictor(x)
     
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    return jsonify(result=sent)
+
+    
+if __name__=='__main__':
+    app.run(host='localhost', port=5000, debug=True, use_reloader=False)
